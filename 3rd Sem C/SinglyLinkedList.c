@@ -43,7 +43,7 @@ void insert_inbetween(Node* list,int data) {
 int  delete() {
 	return 0;
 }
-int main123() {
+int main() {
 	Node* list = malloc(sizeof(Node));
 	Node* head = list;
 	//list->data = 0;
