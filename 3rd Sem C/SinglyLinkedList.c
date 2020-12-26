@@ -17,7 +17,7 @@ Node* add(Node* list,int data) {
 }
 void display(Node* list){
 	while (list->next != NULL) {
-		printf("Data= %d		Address= %p\n",list->data,&(*list));
+		printf("Data= %d	Address= %p\n",list->data,&(*list));
 		list = list->next;
 	}
 }
