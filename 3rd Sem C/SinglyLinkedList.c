@@ -1,9 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
+#define True 1
 typedef struct node {
 	int data;
 	struct node* next;
 }Node;
+Node* getnode(){
+	return (Node*) malloc(sizeof(Node));
+}
 Node* add(Node* list,int data) {
 	/*while (list->next != NULL) {
 		list = list->next;
@@ -44,6 +48,31 @@ int  delete() {
 	return 0;
 }
 int main() {
+	int input=999;
+	while(input!=0){
+		printf("Enter 1 to add");
+		printf("Enter 2 to delete");
+		printf("Enter 3 to display");
+		printf("Enter 0 to exit.");
+		scanf("%d",&input);
+		switch (input)
+		{
+		case 0:
+			break;
+		case 1:
+			printf("Enter data and position to be appended:");
+			int data,pos;
+			scanf("%d %d",&data,&pos);
+
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		default:
+			break;
+		}
+	}
 	Node* list = malloc(sizeof(Node));
 	Node* head = list;
 	//list->data = 0;
