@@ -5,22 +5,38 @@ typedef struct node {
 	int data;
 	struct node* next;
 }Node;
-Node* getnode(){
-	return (Node*) malloc(sizeof(Node));
-}
-Node* add(Node* list,int data) {
+
+void add(Node** list,int data) {
 	/*while (list->next != NULL) {
 		list = list->next;
 	}*/
-	list->data = data;
-	list->next = malloc(sizeof(Node*));
-	list = list->next;
-	list->data = -999;
-	list->next = NULL;
-	return list;
+	Node* newnode=malloc(sizeof(Node));
+	newnode->data=data;
+	newnode->next=NULL;
+	if (*list==NULL)
+	{
+		*list=newnode;
+		//printf("NULL:Data= %d	Address= %p\n",(*list)->data,&(**list));
+		return;
+	}
+	Node* temp=*list;
+	while(temp->next!=NULL){
+		temp=temp->next;
+	}
+	temp->next=newnode;
+	//printf("Data= %d	Address= %p\n",newnode->data,&newnode);
+	return;
+	
+	// list->data = data;
+	// list->next = malloc(sizeof(Node*));
+	// list = list->next;
+	// list->data = -999;
+	// list->next = NULL;
 }
+
 void display(Node* list){
-	while (list->next != NULL) {
+
+	while (list != NULL) {
 		printf("Data= %d	Address= %p\n",list->data,&(*list));
 		list = list->next;
 	}
@@ -49,11 +65,12 @@ int  delete() {
 }
 int main() {
 	int input=999;
+	Node* list = NULL;
 	while(input!=0){
-		printf("Enter 1 to add");
-		printf("Enter 2 to delete");
-		printf("Enter 3 to display");
-		printf("Enter 0 to exit.");
+		printf("Enter 1 to add\n");
+		printf("Enter 2 to delete\n");
+		printf("Enter 3 to display\n");
+		printf("Enter 0 to exit.\n");
 		scanf("%d",&input);
 		switch (input)
 		{
@@ -61,20 +78,25 @@ int main() {
 			break;
 		case 1:
 			printf("Enter data and position to be appended:");
-			int data,pos;
-			scanf("%d %d",&data,&pos);
-
+			int data;
+			scanf("%d",&data);
+			add(&list,data);
 			break;
 		case 2:
+			printf("Enter position to be deleted:");
+			int pos;
+			scanf("%d",&pos);
+
 			break;
 		case 3:
+			display(list);
 			break;
 		default:
+			printf("Not a valid choice.");
 			break;
 		}
 	}
-	Node* list = malloc(sizeof(Node));
-	Node* head = list;
+	
 	//list->data = 0;
 	//list->next = malloc(sizeof(Node*));
 	//printf("Data= %d\tAddress= %p\n", list->data, &list);
@@ -89,18 +111,18 @@ int main() {
 	//list->next = NULL;
 	//printf("Data--->%d\tAddress--->%p",list->data,&list);
 
-	list = add(list,1);
-	list = add(list, 2);
-	list = add(list, 3);
-	list = add(list, 4);
-	/*list = add(list, 6);
-	list = add(list, 7);
-	list = add(list, 8);
-	list = add(list, 9);
-	list = add(list, 0);*/
-	insert_inbetween(head,5);
+	// list = add(list,1);
+	// list = add(list, 2);
+	// list = add(list, 3);
+	// list = add(list, 4);
+	// /*list = add(list, 6);
+	// list = add(list, 7);
+	// list = add(list, 8);
+	// list = add(list, 9);
+	// list = add(list, 0);*/
+	// insert_inbetween(head,5);
 
-	display(head);
+	// display(head);
 	//traverse(head);
 	//free(list);
 	return EXIT_SUCCESS;
