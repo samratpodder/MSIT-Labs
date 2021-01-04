@@ -35,10 +35,10 @@ void add(Node** list,int data) {
 }
 
 void display(Node* list){
-
-	while (list != NULL) {
-		printf("Data= %d	Address= %p\n",list->data,&(*list));
-		list = list->next;
+	Node* temp = list;
+	while (temp != NULL) {
+		printf("Data= %d	Address= %p\n",temp->data,&(*temp));
+		temp = temp->next;
 	}
 }
 void insert_inbetween(Node* list,int data) {
@@ -60,8 +60,25 @@ void insert_inbetween(Node* list,int data) {
 	newnode->next = head->next;
 	head->next = newnode;
 }
-int  delete() {
-	return 0;
+void  delete(Node** list,int pos) 
+{
+	Node* temp = *list,*prev;
+	if(temp==NULL)
+		return;
+	if(pos==1){
+		*list=temp->next;
+		free(temp);
+		return;
+	}
+	while(pos>1){
+		prev=temp;
+		temp = temp->next;
+		pos--;
+	}
+	prev->next=temp->next;
+	free(temp);
+	return;
+
 }
 int main() {
 	int input=999;
@@ -86,7 +103,7 @@ int main() {
 			printf("Enter position to be deleted:");
 			int pos;
 			scanf("%d",&pos);
-
+			delete(&list,pos);
 			break;
 		case 3:
 			display(list);
