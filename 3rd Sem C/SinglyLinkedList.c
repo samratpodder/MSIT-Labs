@@ -1,11 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define True 1
+#define False 0
 typedef struct node {
 	int data;
 	struct node* next;
 }Node;
-
 void add(Node** list,int data) {
 	/*while (list->next != NULL) {
 		list = list->next;
@@ -41,30 +41,14 @@ void display(Node* list){
 		temp = temp->next;
 	}
 }
-void insert_inbetween(Node* list,int data) {
-	int counter = 0;
-	Node* head = list;
-	while (list->next != NULL) {
-		counter += 1;
-		list = list->next;
-	}
-	int mid = counter / 2;
-	Node* newnode = malloc(sizeof(Node));
-	newnode->data = data;
-	newnode->next = NULL;
-	while (mid != 1)
-	{
-		head = head->next;
-		mid--;
-	}
-	newnode->next = head->next;
-	head->next = newnode;
-}
 void  delete(Node** list,int pos) 
 {
 	Node* temp = *list,*prev;
-	if(temp==NULL)
+	if(temp==NULL){
+		printf("Void List\n");
 		return;
+	}
+		
 	if(pos==1){
 		*list=temp->next;
 		free(temp);
@@ -80,6 +64,25 @@ void  delete(Node** list,int pos)
 	return;
 
 }
+void search(Node** list,int key){
+	Node* temp = *list;
+	int i=1;
+	int flag = True;
+	while (temp != NULL) {
+		if (temp->data==key)
+		{
+			printf("Occurence No.:%d\tData= %d	Address= %p\n",i,temp->data,&(*temp));
+			i++;
+			flag=False;
+		}
+		temp = temp->next;
+	}
+	if (flag)
+	{
+		printf("No occurences of %d found in list at address %p\n",key,list);
+	}
+	
+}
 int main() {
 	int input=999;
 	Node* list = NULL;
@@ -87,6 +90,7 @@ int main() {
 		printf("Enter 1 to add\n");
 		printf("Enter 2 to delete\n");
 		printf("Enter 3 to display\n");
+		printf("Enter 4 to search\n");
 		printf("Enter 0 to exit.\n");
 		scanf("%d",&input);
 		switch (input)
@@ -108,6 +112,11 @@ int main() {
 		case 3:
 			display(list);
 			break;
+		case 4:
+		printf("Enter data to be searched: ");
+		int searchdata;
+		scanf("%d",&searchdata);
+			search(&list,searchdata);break;
 		default:
 			printf("Not a valid choice.");
 			break;
