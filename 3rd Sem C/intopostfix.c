@@ -1,22 +1,11 @@
 #include<stdio.h>
 #include<stdlib.h>
+#define LTR 1
+#define RTL 2
 typedef struct node {
 	int data;
 	struct node* next;
 }Node;
-int top(Node** stack)
-{
-    int top;
-    Node* temp = *stack;
-    while (temp->next!=NULL)
-    {
-        
-        temp = temp->next;
-        top=temp->data;
-    }
-    return top;
-
-}
 void push(Node** stack,int data)
 {
     Node* top = *stack;
@@ -53,6 +42,17 @@ void display(Node* stack)
     }
     printf("\n");
 }
+int top(Node** stack)
+{
+    int top;
+    Node* temp = *stack;
+    while (temp->next!=NULL)
+    {
+        temp = temp->next;
+        top=temp->data;
+    }
+    return top;
+}
 void pop(Node** stack)
 {
     Node* top = *stack,*prev;
@@ -75,39 +75,43 @@ void pop(Node** stack)
     prev->next=NULL;
     free(top);
 }
+int precedence(char c) 
+{ 
+    switch (c) 
+    { 
+    case '+': 
+    case '-': 
+        return 1; 
+  
+    case '*': 
+    case '/': 
+        return 2; 
+  
+    case '^': 
+        return 3; 
+    } 
+    return -1; 
+} 
+int associativity(char c)
+{
+    switch (c)
+    {
+    case '^':
+        return RTL;
+    case '+':
+    case '-':
+    case '*':
+    case '/':
+        return LTR;
+    default:
+        return -1;
+        break;
+    }
+}
 int main()
 {
-    int input=999;
-	Node* stack = NULL;
-	while(input!=0){
-		printf("Enter 1 to push\n");
-		printf("Enter 2 to pop\n");
-		printf("Enter 3 to display\n");
-		printf("Enter 4 to view top.\n");
-        printf("Enter 0 to exit.\n");
-		scanf("%d",&input);
-		switch (input)
-		{
-		case 0:
-			break;
-		case 1:
-			printf("Enter data to be pushed:");
-			int data;
-			scanf("%d",&data);
-			push(&stack,data);
-			break;
-		case 2:
-			pop(&stack);
-			break;
-		case 3:
-			display(stack);
-			break;
-        case 4:
-            printf("%d\n",top(&stack));break;
-		default:
-			printf("Not a valid choice.");
-			break;
-		}
-	}
+    char* input = "a+b*(c^d-e)^(f+g*h)-i";
+    Node* stack = NULL;
+    
     return EXIT_SUCCESS;
 }
