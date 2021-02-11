@@ -128,11 +128,31 @@ void solve(char* exp, Node** stack)
             // display(*stack);
             if (*stack==NULL)
             {
-                push(stack,*exp);continue;
-                display(*stack);
+                push(stack,*exp);
+                // display(*stack);
+                continue;
             }
             else
             {
+                if (top(stack)=='(')
+                {
+                    push(stack,*exp);continue;
+                }
+                
+                if (*exp=='(')
+                {
+                    push(stack,*exp);
+                }
+                if (*exp==')')
+                {
+                    while(top(stack)!='(')
+                    {
+                        printf("%c",top(stack));
+                        pop(stack);
+                    }
+                    pop(stack);
+                }
+                
                 if (precedence(*exp)==precedence(top(stack)))
                 {
                     if (associativity(*exp)==LTR)
@@ -151,7 +171,11 @@ void solve(char* exp, Node** stack)
                 }
                 if (precedence(*exp)<precedence(top(stack)))
                 {
-                    
+                    while (precedence(top(stack))>=precedence(*exp))
+                    {
+                        printf("%c",top(stack));
+                        pop(stack);
+                    }
                 }
                 
                 
@@ -160,11 +184,17 @@ void solve(char* exp, Node** stack)
         }
         exp+=1;
     }
+    // display(*stack);
+    while (*stack!=NULL)
+        {
+            printf("%c",top(stack));
+            pop(stack);
+        }
 }
 
 int main()
 {
-    char* input = "a+b*(c^d-e)^(f+g*h)-i\0";
+    char* input = "a+(b+c*d)\0";
     Node* stack = NULL;
     solve(input,&stack);
     printf("\n");
