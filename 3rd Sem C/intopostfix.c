@@ -3,7 +3,7 @@
 #define LTR 1
 #define RTL 2
 typedef struct node {
-	int data;
+	char data;
 	struct node* next;
 }Node;
 void push(Node** stack,int data)
@@ -32,7 +32,7 @@ void display(Node* stack)
     Node* temp=stack;
     while(temp!= NULL)
     {
-        printf("%d",temp->data);
+        printf("%c",temp->data);
         temp = temp->next;
         if (temp!=NULL)
         {
@@ -42,9 +42,9 @@ void display(Node* stack)
     }
     printf("\n");
 }
-int top(Node** stack)
+char top(Node** stack)
 {
-    int top;
+    char top;
     Node* temp = *stack;
     while (temp->next!=NULL)
     {
@@ -112,11 +112,61 @@ int isOperand(char ch)
 { 
     return (ch >= 'a' && ch <= 'z') ||  
            (ch >= 'A' && ch <= 'Z'); 
-} 
+}
+void solve(char* exp, Node** stack)
+{
+    Node* stk = *stack;
+    while (*exp!='\0')
+    {
+        // printf("%c",*exp);
+        if (isOperand(*exp))
+        {
+            printf("%c",*exp);
+        }
+        else
+        {
+            // display(*stack);
+            if (*stack==NULL)
+            {
+                push(stack,*exp);continue;
+                display(*stack);
+            }
+            else
+            {
+                if (precedence(*exp)==precedence(top(stack)))
+                {
+                    if (associativity(*exp)==LTR)
+                    {
+                        printf("%c",top(stack));
+                        pop(stack);
+                    }
+                    if (associativity(*exp)==RTL)
+                    {
+                        push(stack,*exp);
+                    }
+                }
+                if (precedence(*exp)>precedence(top(stack)))
+                {
+                    push(stack,*exp);
+                }
+                if (precedence(*exp)<precedence(top(stack)))
+                {
+                    
+                }
+                
+                
+                
+            }
+        }
+        exp+=1;
+    }
+}
+
 int main()
 {
-    char* input = "a+b*(c^d-e)^(f+g*h)-i";
+    char* input = "a+b*(c^d-e)^(f+g*h)-i\0";
     Node* stack = NULL;
-    
+    solve(input,&stack);
+    printf("\n");
     return EXIT_SUCCESS;
 }
