@@ -108,6 +108,11 @@ int associativity(char c)
         break;
     }
 }
+int isOperand(char ch) 
+{ 
+    return (ch >= 'a' && ch <= 'z') ||  
+           (ch >= 'A' && ch <= 'Z'); 
+} 
 int main()
 {
     char* input = "a+b*(c^d-e)^(f+g*h)-i";
