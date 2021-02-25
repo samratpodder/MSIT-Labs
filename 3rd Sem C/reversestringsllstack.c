@@ -1,12 +1,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 typedef struct node {
-	int data;
+	char data;
 	struct node* next;
 }Node;
-int top(Node** stack)
+char top(Node** stack)
 {
-    int top;
+    char top;
     Node* temp = *stack;
     while (temp->next!=NULL)
     {
@@ -17,7 +17,7 @@ int top(Node** stack)
     return top;
 
 }
-void push(Node** stack,int data)
+void push(Node** stack,char data)
 {
     Node* top = *stack;
     Node* newnode = malloc(sizeof(Node));
@@ -43,12 +43,12 @@ void show(Node* stack)
     Node* temp=stack;
     while(temp!= NULL)
     {
-        printf("%d",temp->data);
+        printf("%c",temp->data);
         temp = temp->next;
-        if (temp!=NULL)
-        {
-            printf("---->");
-        }
+        // if (temp!=NULL)
+        // {
+        //     printf("---->");
+        // }
         
     }
     printf("\n");
@@ -75,39 +75,29 @@ void pop(Node** stack)
     prev->next=NULL;
     free(top);
 }
+
+void reverse(Node* list)
+{
+    if(list==NULL)
+    {
+        return;
+    }
+    reverse(list->next);
+    printf("%c",list->data);
+    return;
+}
 int main()
 {
-    int input=999;
-	Node* stack = NULL;
-	while(input!=0){
-		printf("Enter 1 to push\n");
-		printf("Enter 2 to pop\n");
-		printf("Enter 3 to display\n");
-		printf("Enter 4 to view top.\n");
-        printf("Enter 0 to exit.\n");
-		scanf("%d",&input);
-		switch (input)
-		{
-		case 0:
-			break;
-		case 1:
-			printf("Enter data to be pushed:");
-			int data;
-			scanf("%d",&data);
-			push(&stack,data);
-			break;
-		case 2:
-			pop(&stack);
-			break;
-		case 3:
-			show(stack);
-			break;
-        case 4:
-            printf("%d\n",top(&stack));break;
-		default:
-			printf("Not a valid choice.");
-			break;
-		}
-	}
+    Node* list=NULL;
+    char* str = "This String will be reversed!\0";
+    while (*str!='\0')
+    {
+        // printf("%c",*str);
+        push(&list,*str);
+        str+=1;
+    }
+    show(list);
+    // show(list);
+    reverse(list);
     return EXIT_SUCCESS;
 }
