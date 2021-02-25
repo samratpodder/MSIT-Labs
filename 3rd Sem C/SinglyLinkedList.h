@@ -1,7 +1,4 @@
-typedef struct node {
-	int data;
-	struct node* next;
-}Node;
+#include"D:\Source Codes\Github Repositories\MSIT-Labs\3rd Sem C\node.h"
 void add(Node** list,int data);
 void reverseprint(Node* head);
 void display(Node* list);
