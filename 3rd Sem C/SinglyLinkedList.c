@@ -33,7 +33,16 @@ void add(Node** list,int data) {
 	// list->data = -999;
 	// list->next = NULL;
 }
-
+void reverseprint(Node* head)
+{
+	if (head == NULL)
+	{
+		return;
+	}
+	reverseprint(head->next);
+	printf("%d\t",head->data);
+	return;
+}
 void display(Node* list){
 	Node* temp = list;
 	while (temp != NULL) {
@@ -91,6 +100,7 @@ int main() {
 		printf("Enter 2 to delete\n");
 		printf("Enter 3 to display\n");
 		printf("Enter 4 to search\n");
+		printf("Enter 5 to reverse print.\n");
 		printf("Enter 0 to exit.\n");
 		scanf("%d",&input);
 		switch (input)
@@ -117,6 +127,9 @@ int main() {
 		int searchdata;
 		scanf("%d",&searchdata);
 			search(&list,searchdata);break;
+		case 5:
+			reverseprint(list);
+			break;
 		default:
 			printf("Not a valid choice.");
 			break;
