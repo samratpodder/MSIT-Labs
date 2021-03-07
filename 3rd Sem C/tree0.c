@@ -17,13 +17,27 @@ Node* newnode(char data)
 }
 void insert(Node** root,char data)
 {
-    // printf("hijibiji\n");
+    // 
     if (*root == NULL)
     {
-        // printf("hijibiji\n");
+        // 
         *root = newnode(data); 
     }
     Node* temp = *root;
+    int done =0;
+    while (!done)
+    {
+        if(data<temp->data && temp->left!=NULL)
+        {
+            temp=temp->left;continue;
+        }
+        else if (data>temp->data && temp->right!=NULL)
+        {
+            temp=temp->right;continue;
+        }
+        done=1;
+    }
+    /*
     while (temp->left!=NULL || temp->right!=NULL)
     {
         if(temp->data<data)
@@ -34,7 +48,7 @@ void insert(Node** root,char data)
         {
             temp=temp->left;
         }
-    }
+    }*/
     if(temp->data<data)
     {
         temp->right=newnode(data);
@@ -65,25 +79,47 @@ void pretrav(Node* root)
 
     
 }
+void intrav(Node* root)
+{
+    if (root==NULL)
+    {
+        return;
+    }
+    intrav(root->left);
+    printf("%c",root->data);
+    intrav(root->right);
+    return;
+
+    
+}
+void posttrav(Node* root)
+{
+    if (root==NULL)
+    {
+        return;
+    }
+    posttrav(root->left);
+    posttrav(root->right);
+    printf("%c",root->data);
+    
+}
 int main()
 {
-    printf("hijibiji\n");
     Node* root = NULL;
-    printf("hijibiji\n");
     insert(&root,'4');
-    printf("hijibiji\n");
     insert(&root,'1');
-    printf("hijibiji\n");
     insert(&root,'2');
-    printf("hijibiji\n");
     insert(&root,'3');
-    printf("hijibiji\n");
     insert(&root,'9');
-    printf("hijibiji\n");
     insert(&root,'5');
     insert(&root,'6');
     insert(&root,'7');
-    printf("hijibiji\n");
+    printf("\nPreorder:");
     pretrav(root);
+    printf("\nInorder:");
+    intrav(root);
+    printf("\nPostorder:");
+    posttrav(root);
+    printf("\n");
     return EXIT_SUCCESS;
 }
